@@ -17,6 +17,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4349810215274926');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <style>
   /* ---------- design tokens ---------- */
   :root {
@@ -287,6 +305,30 @@
     font-size: 0.92rem;
     color: var(--ink-muted);
     font-weight: 400;
+  }
+
+  .hero-early {
+    margin: 1.6rem 0 0 0;
+    max-width: 520px;
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.01em;
+    line-height: 1.65;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 1s var(--ease) 1.6s forwards;
+  }
+  .hero-early-label {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.15rem 0.55rem;
+    background: rgba(20, 17, 13, 0.06);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    vertical-align: middle;
   }
 
   /* hero success state */
@@ -617,6 +659,17 @@
     .field-note { padding-inline: 0.25rem; }
 
     .capture-inner { text-align: left; }
+
+    .hero-early {
+      font-size: 0.78rem;
+      line-height: 1.7;
+      margin-top: 1.4rem;
+    }
+    .hero-early-label {
+      display: block;
+      margin-bottom: 0.4rem;
+      margin-right: 0;
+    }
   }
 
   /* ---------- mode transitions: survey + thanks ---------- */
@@ -709,8 +762,15 @@
     font-style: italic;
     font-size: 1.05rem;
     color: var(--ink-soft);
-    margin: 0 0 2rem 0;
+    margin: 0 0 0.5rem 0;
     max-width: 38ch;
+  }
+
+  .survey-time {
+    margin: 0 0 2rem 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
   }
 
   .survey-form {
@@ -946,18 +1006,18 @@
     </div>
 
     <h1 class="hero-title">
-      <span class="word" style="animation-delay:.25s">We're</span>
-      <span class="word" style="animation-delay:.32s">building</span>
-      <span class="word" style="animation-delay:.39s">a</span>
-      <span class="word" style="animation-delay:.46s">platform</span>
-      <span class="word" style="animation-delay:.53s">to</span>
-      <span class="word" style="animation-delay:.60s">help</span>
-      <span class="word" style="animation-delay:.67s">us</span>
-      <span class="word" style="animation-delay:.74s"><em>live&nbsp;better</em></span>
-      <span class="word" style="animation-delay:.81s">in</span>
-      <span class="word" style="animation-delay:.88s">the</span>
-      <span class="word" style="animation-delay:.95s">real</span>
-      <span class="word" style="animation-delay:1.02s">world.</span>
+      <span class="word" style="animation-delay:.12s">We're</span>
+      <span class="word" style="animation-delay:.155s">building</span>
+      <span class="word" style="animation-delay:.19s">a</span>
+      <span class="word" style="animation-delay:.225s">platform</span>
+      <span class="word" style="animation-delay:.26s">to</span>
+      <span class="word" style="animation-delay:.295s">help</span>
+      <span class="word" style="animation-delay:.33s">us</span>
+      <span class="word" style="animation-delay:.365s"><em>live&nbsp;better</em></span>
+      <span class="word" style="animation-delay:.40s">in</span>
+      <span class="word" style="animation-delay:.435s">the</span>
+      <span class="word" style="animation-delay:.47s">real</span>
+      <span class="word" style="animation-delay:.505s">world.</span>
     </h1>
 
     <p class="hero-sub">More human. Less online. More real.</p>
@@ -1005,14 +1065,13 @@
 
       <div class="mission-body">
         <p class="reveal">
-          The walks. The mornings. The friends we keep meaning to see. The quiet coffee. The long run.
-          The conversation that doesn't end on a screen.
+          Somewhere along the way, the way we're living stopped feeling like ours.
         </p>
         <p class="reveal">
-          Elira is a place to build a life around those moments &mdash; intentionally, together, in the real world.
+          &ldquo;Living better in the real world&rdquo; can mean a thousand things. We don't want to define it for you &mdash; we want to hear what it would mean for you.
         </p>
         <p class="reveal">
-          We're not optimizing you. We're not gamifying your habits. We're building something quieter, and we'd like your help.
+          Elira is an early, quiet attempt to figure this out. With you, not for you.
         </p>
       </div>
     </div>
@@ -1065,7 +1124,7 @@
 <!-- footer -->
 <footer class="foot">
   <span class="wm">Elira</span>
-  <span>&copy; 2026 &middot; Built quietly, in the real world.</span>
+  <span>Since 2026 &middot; Built quietly, in the real world.</span>
 </footer>
 
 <!-- SURVEY SCREEN (hidden until email submitted) -->
@@ -1078,6 +1137,7 @@
     <p class="survey-lead">
       Your email is already saved &mdash; this part is optional, but it shapes everything we build next.
     </p>
+    <p class="survey-time">Two questions. About 60 seconds.</p>
 
     <form class="survey-form" id="surveyForm" novalidate>
       <div class="survey-q">
@@ -1139,13 +1199,19 @@
 </section>
 
 <script>
-  // smooth scroll for in-page anchors
+  // smooth scroll for in-page anchors + auto-focus the destination email field
   document.querySelectorAll('[data-scroll-to]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const target = document.querySelector(btn.getAttribute('data-scroll-to'));
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // after scroll, focus the first email input in the destination so the
+        // mobile keyboard pops up automatically and desktop users start typing
+        setTimeout(() => {
+          const input = target.querySelector('input[type="email"]');
+          if (input) input.focus({ preventScroll: true });
+        }, 650);
       }
     });
   });
@@ -1175,7 +1241,7 @@
   // Google Sheets webhook (Apps Script deployed as Web App).
   // Leave as empty string until Megan provides the URL — survey will still work,
   // it just won't persist responses anywhere if this is blank.
-  const SHEETS_WEBHOOK_URL = '';
+  const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzL_fXkHXKrjZ1X-ZQu1qhHghJm5G8Jls5cIKNM7t1PYZQ_B_gz_CDmlNIhe-wEoZRe/exec';
 
   // Tracks the email and source captured during step 1, used when posting the survey.
   const eliraSession = {
@@ -1276,6 +1342,10 @@
         // capture for survey step
         eliraSession.email = email;
         eliraSession.source = source;
+        // fire Meta Pixel Lead event so ad campaigns can optimize toward converters
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', { content_name: source });
+        }
         // transition to survey screen
         enterSurveyMode();
       } catch (err) {
@@ -1321,6 +1391,13 @@
       // and we don't want to penalize them for an infra issue.
       if (result && result.ok === false) {
         console.warn('[Elira] Survey write failed; advancing to thanks anyway.');
+      }
+
+      // fire custom Meta Pixel event for full survey completion (deeper signal than just Lead)
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'SurveyCompleted', {
+          research_opt_in: payload.research_opt_in
+        });
       }
 
       enterThanksMode();
