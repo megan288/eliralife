@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#14110D" />
-<title>Lyra — Live better in the real world.</title>
+<title>Elira — Live better in the real world.</title>
 <meta name="description" content="We're building a platform to help us live better in the real world. More human. Less online. More real." />
 
 <!-- Open Graph -->
-<meta property="og:title" content="Lyra — Live better in the real world." />
+<meta property="og:title" content="Elira — Live better in the real world." />
 <meta property="og:description" content="More human. Less online. More real." />
 <meta property="og:type" content="website" />
 
@@ -619,6 +619,298 @@
     .capture-inner { text-align: left; }
   }
 
+  /* ---------- mode transitions: survey + thanks ---------- */
+  .survey-screen,
+  .thanks-screen {
+    display: none;
+    position: relative;
+    min-height: 100svh;
+    min-height: 100vh;
+    isolation: isolate;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(6rem, 12vh, 8rem) var(--gutter) clamp(4rem, 8vh, 6rem);
+  }
+
+  body.mode-survey .hero,
+  body.mode-survey .mission,
+  body.mode-survey .capture,
+  body.mode-survey .foot,
+  body.mode-survey .nav { display: none; }
+  body.mode-survey .survey-screen { display: flex; }
+
+  body.mode-thanks .hero,
+  body.mode-thanks .mission,
+  body.mode-thanks .capture,
+  body.mode-thanks .foot,
+  body.mode-thanks .nav,
+  body.mode-thanks .survey-screen { display: none; }
+  body.mode-thanks .thanks-screen { display: flex; }
+
+  /* shared atmospheric background for survey/thanks */
+  .survey-screen::before,
+  .thanks-screen::before {
+    content: '';
+    position: absolute;
+    inset: -10%;
+    z-index: -3;
+    background:
+      radial-gradient(58% 48% at 18% 22%, rgba(193, 154, 91, 0.5) 0%, rgba(193, 154, 91, 0) 60%),
+      radial-gradient(48% 42% at 82% 30%, rgba(184, 113, 74, 0.4) 0%, rgba(184, 113, 74, 0) 60%),
+      radial-gradient(62% 56% at 72% 88%, rgba(122, 133, 104, 0.38) 0%, rgba(122, 133, 104, 0) 60%),
+      linear-gradient(180deg, #EFE8DB 0%, #E8DFC9 100%);
+    animation: drift 32s var(--ease) infinite alternate;
+  }
+  .survey-screen::after,
+  .thanks-screen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.28;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .survey-card,
+  .thanks-card {
+    width: 100%;
+    max-width: 620px;
+    background: rgba(255, 251, 243, 0.78);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: clamp(2rem, 5vw, 3.25rem);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 30px 80px -40px rgba(20,17,13,0.35);
+    animation: rise 0.85s var(--ease) forwards;
+  }
+
+  .survey-eyebrow {
+    margin-bottom: 1.1rem;
+  }
+
+  .survey-h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 0.65rem 0;
+    max-width: 18ch;
+  }
+  .survey-h2 em { font-style: italic; color: var(--rust); }
+
+  .survey-lead {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 0 0 2rem 0;
+    max-width: 38ch;
+  }
+
+  .survey-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .survey-q {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .survey-q label {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .survey-q textarea {
+    width: 100%;
+    min-height: 96px;
+    padding: 0.95rem 1.05rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .survey-q textarea::placeholder { color: var(--ink-muted); font-style: italic; }
+  .survey-q textarea:focus {
+    border-color: var(--ink);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 22px -16px rgba(20,17,13,0.25);
+  }
+
+  .survey-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem 1.1rem;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background .3s var(--ease), border-color .3s var(--ease);
+  }
+  .survey-checkbox:hover { background: rgba(255, 255, 255, 0.65); }
+  .survey-checkbox input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 1px 0 0 0;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+  .survey-checkbox .check-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .survey-checkbox .check-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.96rem;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .survey-checkbox .check-sub {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+
+  .survey-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+  }
+
+  .survey-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.95rem 1.6rem;
+    background: var(--ink);
+    color: var(--bg-soft);
+    border: none;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background .3s var(--ease), transform .3s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .survey-submit:hover { background: #000; }
+  .survey-submit:active { transform: scale(0.98); }
+  .survey-submit[disabled] { opacity: 0.7; cursor: progress; }
+  .survey-submit .arrow { width: 16px; height: 16px; transition: transform .35s var(--ease); }
+  .survey-submit:hover .arrow { transform: translateX(3px); }
+  .survey-submit .spinner {
+    display: none;
+    width: 14px; height: 14px;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    border-top-color: var(--bg-soft);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  .survey-submit.loading .spinner { display: inline-block; }
+  .survey-submit.loading .arrow,
+  .survey-submit.loading .btn-label { display: none; }
+
+  .survey-skip {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(108, 98, 86, 0.4);
+    padding: 0.5rem 0.75rem;
+    transition: color .3s var(--ease);
+  }
+  .survey-skip:hover { color: var(--ink); }
+
+  .survey-error {
+    display: none;
+    margin-top: 0.6rem;
+    font-size: 0.86rem;
+    color: var(--rust);
+    font-style: italic;
+  }
+  .survey-error.show { display: block; }
+
+  /* thanks screen */
+  .thanks-card {
+    text-align: left;
+    max-width: 560px;
+  }
+  .thanks-eyebrow {
+    margin-bottom: 1.2rem;
+  }
+  .thanks-h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4.6vw, 2.9rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 1rem 0;
+  }
+  .thanks-h2 em { font-style: italic; color: var(--rust); }
+  .thanks-body {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 38ch;
+  }
+  .thanks-foot {
+    margin-top: 2.2rem;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* mobile tuning for survey/thanks */
+  @media (max-width: 640px) {
+    .survey-card,
+    .thanks-card {
+      padding: 1.6rem 1.4rem;
+      border-radius: 22px;
+    }
+    .survey-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .survey-submit {
+      justify-content: center;
+    }
+    .survey-skip {
+      align-self: center;
+    }
+  }
+
   /* reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -637,7 +929,7 @@
 
 <!-- nav -->
 <nav class="nav" aria-label="Top">
-  <a href="#" class="wordmark" aria-label="Lyra home">Lyra</a>
+  <a href="#" class="wordmark" aria-label="Elira home">Elira</a>
   <button class="nav-cta" type="button" data-scroll-to="#capture">Join the waitlist</button>
 </nav>
 
@@ -650,7 +942,7 @@
   <div class="wrap hero-inner">
     <div class="hero-eyebrow eyebrow">
       <span class="dot"></span>
-      <span>Now forming · Early 2026</span>
+      <span>Now forming · Launching 2026</span>
     </div>
 
     <h1 class="hero-title">
@@ -695,7 +987,7 @@
 
     <div class="hero-success" id="heroSuccess" role="status" aria-live="polite">
       <h3>You're in.</h3>
-      <p>We'll be in touch with a few short questions — your voice will help shape what Lyra becomes.</p>
+      <p>We'll be in touch with a few short questions — your voice will help shape what Elira becomes.</p>
     </div>
   </div>
 </section>
@@ -717,7 +1009,7 @@
           The conversation that doesn't end on a screen.
         </p>
         <p class="reveal">
-          Lyra is a place to build a life around those moments &mdash; intentionally, together, in the real world.
+          Elira is a place to build a life around those moments &mdash; intentionally, together, in the real world.
         </p>
         <p class="reveal">
           We're not optimizing you. We're not gamifying your habits. We're building something quieter, and we'd like your help.
@@ -764,7 +1056,7 @@
 
       <div class="capture-success" id="captureSuccess" role="status" aria-live="polite">
         <h3>You're in.</h3>
-        <p>We'll be in touch soon with a few questions — your voice will help shape what Lyra becomes.</p>
+        <p>We'll be in touch soon with a few questions — your voice will help shape what Elira becomes.</p>
       </div>
     </div>
   </div>
@@ -772,9 +1064,79 @@
 
 <!-- footer -->
 <footer class="foot">
-  <span class="wm">Lyra</span>
+  <span class="wm">Elira</span>
   <span>&copy; 2026 &middot; Built quietly, in the real world.</span>
 </footer>
+
+<!-- SURVEY SCREEN (hidden until email submitted) -->
+<section class="survey-screen" id="surveyScreen" aria-hidden="true">
+  <div class="survey-card">
+    <div class="survey-eyebrow eyebrow">A few questions</div>
+    <h2 class="survey-h2">
+      Help us understand <em>what brought you here.</em>
+    </h2>
+    <p class="survey-lead">
+      Your email is already saved &mdash; this part is optional, but it shapes everything we build next.
+    </p>
+
+    <form class="survey-form" id="surveyForm" novalidate>
+      <div class="survey-q">
+        <label for="q1">What about this resonates with you?</label>
+        <textarea
+          id="q1"
+          name="q1_resonates"
+          placeholder="A sentence, a word, a whole story &mdash; whatever's true."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="survey-q">
+        <label for="q2">What would living better in the real world look like for you?</label>
+        <textarea
+          id="q2"
+          name="q2_living_better"
+          placeholder="Be as specific or as broad as feels right."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <label class="survey-checkbox">
+        <input type="checkbox" id="researchOptIn" name="research_opt_in" />
+        <span class="check-text">
+          <span class="check-label">I'd be open to participating in future surveys, interviews, or early testing opportunities.</span>
+          <span class="check-sub">Some opportunities may be compensated.</span>
+        </span>
+      </label>
+
+      <div class="survey-actions">
+        <button class="survey-submit" type="submit">
+          <span class="btn-label">Share with us</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+        <button class="survey-skip" type="button" id="surveySkip">Skip for now</button>
+      </div>
+
+      <p class="survey-error" id="surveyError" role="alert"></p>
+    </form>
+  </div>
+</section>
+
+<!-- THANK YOU SCREEN -->
+<section class="thanks-screen" id="thanksScreen" aria-hidden="true">
+  <div class="thanks-card">
+    <div class="thanks-eyebrow eyebrow">You're in</div>
+    <h2 class="thanks-h2">
+      Thank you. <em>We hear you.</em>
+    </h2>
+    <p class="thanks-body">
+      We're a small group building this quietly. You'll hear from us when there's something real to share &mdash; never noise.
+    </p>
+    <p class="thanks-foot">Elira &middot; built in the real world</p>
+  </div>
+</section>
 
 <script>
   // smooth scroll for in-page anchors
@@ -806,9 +1168,20 @@
     io.observe(el);
   });
 
-  // Loops integration
+  // ---------- integrations ----------
   const LOOPS_FORM_ID = 'cmp4ks51p06fb0j11ibo061a1';
   const LOOPS_ENDPOINT = 'https://app.loops.so/api/newsletter-form/' + LOOPS_FORM_ID;
+
+  // Google Sheets webhook (Apps Script deployed as Web App).
+  // Leave as empty string until Megan provides the URL — survey will still work,
+  // it just won't persist responses anywhere if this is blank.
+  const SHEETS_WEBHOOK_URL = '';
+
+  // Tracks the email and source captured during step 1, used when posting the survey.
+  const eliraSession = {
+    email: null,
+    source: null
+  };
 
   async function submitToLoops(email, source) {
     const body = new URLSearchParams();
@@ -831,11 +1204,52 @@
     return data;
   }
 
-  function wireForm(formId, emailId, successId, errorId, source) {
+  async function submitToSheets(payload) {
+    if (!SHEETS_WEBHOOK_URL) {
+      console.warn('[Elira] SHEETS_WEBHOOK_URL not set — skipping Google Sheets write.', payload);
+      return { skipped: true };
+    }
+    // Use no-cors mode + form data so Apps Script accepts the POST without CORS preflight.
+    const body = new URLSearchParams();
+    Object.keys(payload).forEach(k => body.set(k, payload[k] == null ? '' : String(payload[k])));
+    try {
+      await fetch(SHEETS_WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      // no-cors response is opaque; assume success if no throw
+      return { ok: true };
+    } catch (err) {
+      console.error('[Elira] Sheets write failed', err);
+      return { ok: false, error: err };
+    }
+  }
+
+  // ---------- state transitions ----------
+  function enterSurveyMode() {
+    document.body.classList.remove('mode-thanks');
+    document.body.classList.add('mode-survey');
+    window.scrollTo({ top: 0, left: 0 });
+    // gentle focus shift for accessibility
+    setTimeout(() => {
+      const first = document.getElementById('q1');
+      if (first) first.focus({ preventScroll: true });
+    }, 400);
+  }
+
+  function enterThanksMode() {
+    document.body.classList.remove('mode-survey');
+    document.body.classList.add('mode-thanks');
+    window.scrollTo({ top: 0, left: 0 });
+  }
+
+  // ---------- email forms (step 1) ----------
+  function wireForm(formId, emailId, errorId, source) {
     const form = document.getElementById(formId);
-    const success = document.getElementById(successId);
     const errorEl = document.getElementById(errorId);
-    if (!form || !success) return;
+    if (!form || !errorEl) return;
 
     const input = document.getElementById(emailId);
     const btn = form.querySelector('.submit-btn');
@@ -859,14 +1273,11 @@
 
       try {
         await submitToLoops(email, source);
-        // graceful swap to success state
-        form.style.transition = 'opacity .5s var(--ease), transform .5s var(--ease)';
-        form.style.opacity = '0';
-        form.style.transform = 'translateY(-6px)';
-        setTimeout(() => {
-          form.style.display = 'none';
-          success.classList.add('show');
-        }, 500);
+        // capture for survey step
+        eliraSession.email = email;
+        eliraSession.source = source;
+        // transition to survey screen
+        enterSurveyMode();
       } catch (err) {
         btn.classList.remove('loading');
         btn.disabled = false;
@@ -877,8 +1288,57 @@
     });
   }
 
-  wireForm('heroForm', 'heroEmail', 'heroSuccess', 'heroError', 'lyra-landing-hero');
-  wireForm('captureForm', 'email', 'captureSuccess', 'captureError', 'lyra-landing-bottom');
+  wireForm('heroForm', 'heroEmail', 'heroError', 'elira-landing-hero');
+  wireForm('captureForm', 'email', 'captureError', 'elira-landing-bottom');
+
+  // ---------- survey form (step 2) ----------
+  const surveyForm = document.getElementById('surveyForm');
+  const surveySkip = document.getElementById('surveySkip');
+  const surveyError = document.getElementById('surveyError');
+
+  if (surveyForm) {
+    const surveyBtn = surveyForm.querySelector('.survey-submit');
+
+    surveyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      surveyError.classList.remove('show');
+      surveyError.textContent = '';
+
+      surveyBtn.classList.add('loading');
+      surveyBtn.disabled = true;
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        email: eliraSession.email || '',
+        source: eliraSession.source || '',
+        q1_resonates: document.getElementById('q1').value.trim(),
+        q2_living_better: document.getElementById('q2').value.trim(),
+        research_opt_in: document.getElementById('researchOptIn').checked ? 'yes' : 'no'
+      };
+
+      const result = await submitToSheets(payload);
+      // Even if the write fails, we move the user forward — their email is already saved
+      // and we don't want to penalize them for an infra issue.
+      if (result && result.ok === false) {
+        console.warn('[Elira] Survey write failed; advancing to thanks anyway.');
+      }
+
+      enterThanksMode();
+    });
+
+    surveySkip.addEventListener('click', () => {
+      // Skip → still log the skip event to Sheets if configured.
+      submitToSheets({
+        timestamp: new Date().toISOString(),
+        email: eliraSession.email || '',
+        source: eliraSession.source || '',
+        q1_resonates: '',
+        q2_living_better: '',
+        research_opt_in: 'skipped'
+      });
+      enterThanksMode();
+    });
+  }
 </script>
 
 </body>
