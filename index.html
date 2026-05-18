@@ -628,6 +628,22 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
     font-size: 0.95rem;
     color: var(--ink-soft);
   }
+  .foot-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .foot-links a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color .3s var(--ease);
+  }
+  .foot-links a:hover {
+    color: var(--ink);
+  }
+  .foot-divider {
+    opacity: 0.5;
+  }
 
   /* ---------- responsive: mobile tuning ---------- */
   @media (max-width: 640px) {
@@ -1125,6 +1141,11 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
 <footer class="foot">
   <span class="wm">Elira</span>
   <span>Since 2026 &middot; Built quietly, in the real world.</span>
+  <span class="foot-links">
+    <a href="/privacy.html">Privacy</a>
+    <span class="foot-divider">&middot;</span>
+    <a href="/terms.html">Terms</a>
+  </span>
 </footer>
 
 <!-- SURVEY SCREEN (hidden until email submitted) -->
@@ -1137,7 +1158,7 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
     <p class="survey-lead">
       Your email is already saved &mdash; this part is optional, but it shapes everything we build next.
     </p>
-    <p class="survey-time">Two questions. About 60 seconds.</p>
+    <p class="survey-time">Four questions. About 2 minutes.</p>
 
     <form class="survey-form" id="surveyForm" novalidate>
       <div class="survey-q">
@@ -1151,11 +1172,31 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
       </div>
 
       <div class="survey-q">
-        <label for="q2">What would living better in the real world look like for you?</label>
+        <label for="q2">What feels most broken, exhausting, fake, or missing in the way we live today?</label>
         <textarea
           id="q2"
-          name="q2_living_better"
+          name="q2_broken_missing"
+          placeholder="Be as honest as you want."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="survey-q">
+        <label for="q3">What would living better in the real world look like for you?</label>
+        <textarea
+          id="q3"
+          name="q3_living_better"
           placeholder="Be as specific or as broad as feels right."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="survey-q">
+        <label for="q4">What have you already tried &mdash; and why hasn't it worked?</label>
+        <textarea
+          id="q4"
+          name="q4_tried_why_not"
+          placeholder="What you've tried, what was missing, what fell short."
           rows="3"
         ></textarea>
       </div>
@@ -1382,7 +1423,9 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
         email: eliraSession.email || '',
         source: eliraSession.source || '',
         q1_resonates: document.getElementById('q1').value.trim(),
-        q2_living_better: document.getElementById('q2').value.trim(),
+        q2_broken_missing: document.getElementById('q2').value.trim(),
+        q3_living_better: document.getElementById('q3').value.trim(),
+        q4_tried_why_not: document.getElementById('q4').value.trim(),
         research_opt_in: document.getElementById('researchOptIn').checked ? 'yes' : 'no'
       };
 
@@ -1410,7 +1453,9 @@ src="https://www.facebook.com/tr?id=4349810215274926&ev=PageView&noscript=1"
         email: eliraSession.email || '',
         source: eliraSession.source || '',
         q1_resonates: '',
-        q2_living_better: '',
+        q2_broken_missing: '',
+        q3_living_better: '',
+        q4_tried_why_not: '',
         research_opt_in: 'skipped'
       });
       enterThanksMode();
